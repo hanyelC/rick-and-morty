@@ -47,10 +47,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (typeof params?.id !== 'string') {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
   const gateway = new FakeCharacterGateway()
   const useCase = new GetCharacterUseCase(gateway)
 
-  const { character } = await useCase.get({ id: '1' })
+  const { character } = await useCase.get({ id: params.id })
+
+  if (!character) {
+    return { notFound: true }
+  }
 
   return {
     props: {
