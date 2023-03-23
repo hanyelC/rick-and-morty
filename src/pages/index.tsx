@@ -6,7 +6,6 @@ import { FakeCharacterGateway } from '@infra/gateways'
 
 import { GetStaticProps, NextPage } from 'next'
 import { Inter } from 'next/font/google'
-import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,9 +20,11 @@ const Home: NextPage<Props> = ({ characters }) => {
         <h1 className={inter.className}>Lorem ipsum</h1>
         <div>
           {characters.map((item) => (
-            <Link key={item.id} href={`/character/${item.id}`}>
-              <Card name={item.name} />
-            </Link>
+            <Card
+              key={item.id}
+              {...item}
+              redirectUrl={`/character/${item.id}`}
+            />
           ))}
         </div>
       </main>
