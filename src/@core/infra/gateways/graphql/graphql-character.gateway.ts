@@ -96,7 +96,9 @@ export class GraphqlCharacterGateway
       },
     })
 
-    const character = this.mapCharacterResultToEntity(data.character)
+    const character = data.character
+      ? this.mapCharacterResultToEntity(data.character)
+      : null
 
     return { character }
   }
