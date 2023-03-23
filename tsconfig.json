@@ -14,8 +14,13 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "strictPropertyInitialization": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@application/*": ["./src/@core/application/*"],
+      "@domain/*": ["./src/@core/domain/*"],
+      "@infra/*": ["./src/@core/infra/*"],
+      "@core/*": ["./src/@core/*"],
+      "@/*": ["./src/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
