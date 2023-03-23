@@ -10,6 +10,7 @@ O objetivo do projeto é mostrar personagens que fazem parte da série Rick and 
 * Typescript
 * React.js
 * Next.js
+* CSS Modules
 * Husky
 * Eslint
 * Lint staged
