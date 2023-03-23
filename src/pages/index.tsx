@@ -1,8 +1,8 @@
 import styles from '../styles/pages/home.module.css'
 import { Card } from '@/components/Card'
-import { FetchCharactersUseCase } from '@application/usecases'
 import { Character } from '@domain/entities'
-import { FakeCharacterGateway } from '@infra/gateways'
+import { FetchCharactersUseCase } from '@domain/usecases'
+import { Registry, container } from '@infra/container-registry'
 
 import { GetStaticProps, NextPage } from 'next'
 import { Inter } from 'next/font/google'
@@ -33,8 +33,9 @@ const Home: NextPage<Props> = ({ characters }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const gateway = new FakeCharacterGateway()
-  const useCase = new FetchCharactersUseCase(gateway)
+  const useCase = container.get<FetchCharactersUseCase>(
+    Registry.FetchCharactersUseCase,
+  )
 
   const { characters } = await useCase.fetch()
 

@@ -1,7 +1,7 @@
 import styles from '../../styles/pages/character.module.css'
-import { GetCharacterUseCase } from '@application/usecases'
 import { Character as CharacterEntity } from '@domain/entities'
-import { FakeCharacterGateway } from '@infra/gateways'
+import { GetCharacterUseCase } from '@domain/usecases'
+import { Registry, container } from '@infra/container-registry'
 
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
@@ -56,8 +56,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 
-  const gateway = new FakeCharacterGateway()
-  const useCase = new GetCharacterUseCase(gateway)
+  const useCase = container.get<GetCharacterUseCase>(
+    Registry.GetCharacterUseCase,
+  )
 
   const { character } = await useCase.get({ id: params.id })
 
