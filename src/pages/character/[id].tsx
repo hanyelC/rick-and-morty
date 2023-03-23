@@ -26,7 +26,7 @@ const Character: NextPage<Props> = ({ character }) => {
           <h3>Episodes</h3>
           <ul>
             {character.episodes.map((item) => (
-              <li key={item}>item</li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </div>
