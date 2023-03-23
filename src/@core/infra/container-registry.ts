@@ -5,7 +5,8 @@ import {
   FetchCharactersUseCase,
   GetCharacterUseCase,
 } from '@application/usecases'
-import { FakeCharacterGateway } from '@infra/gateways'
+import { client } from '@infra/apollo-config'
+import { GraphqlCharacterGateway } from '@infra/gateways/graphql/graphql-character.gateway'
 
 export const container = new Container()
 
@@ -20,10 +21,10 @@ export const Registry = {
 // GATEWAYS
 container
   .bind(Registry.FetchCharactersGateway)
-  .toDynamicValue(() => new FakeCharacterGateway())
+  .toDynamicValue(() => new GraphqlCharacterGateway(client))
 container
   .bind(Registry.GetCharacterGateway)
-  .toDynamicValue(() => new FakeCharacterGateway())
+  .toDynamicValue(() => new GraphqlCharacterGateway(client))
 
 // USE CASES
 container.bind(Registry.FetchCharactersUseCase).toDynamicValue((context) => {
