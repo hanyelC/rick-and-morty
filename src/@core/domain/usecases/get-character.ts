@@ -12,6 +12,6 @@ export namespace GetCharacterUseCase {
   }
 
   export type Response = {
-    character: Character
+    character: Character | null
   }
 }

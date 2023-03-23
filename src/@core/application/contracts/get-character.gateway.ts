@@ -12,6 +12,6 @@ export namespace GetCharacterGateway {
   }
 
   export type Response = {
-    character: Character
+    character: Character | null
   }
 }
