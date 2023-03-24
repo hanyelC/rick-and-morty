@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "cypress": "cypress open",
+    "prepare": "husky install",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
+    "test:e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
+    "test:component": "cypress open --component",
+    "test:component:headless": "cypress run --component"
   },
   "dependencies": {
     "@apollo/client": "3.7.10",
@@ -23,10 +28,13 @@
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "cypress": "12.8.1",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "eslint-plugin-cypress": "2.12.1",
     "husky": "^8.0.0",
     "lint-staged": "13.2.0",
+    "start-server-and-test": "2.0.0",
     "typescript": "5.0.2",
     "typescript-plugin-css-modules": "5.0.0"
   }
