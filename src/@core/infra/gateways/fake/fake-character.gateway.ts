@@ -10,7 +10,15 @@ export class FakeCharacterGateway
   async fetchAll(
     params?: FetchCharactersGateway.Request,
   ): Promise<FetchCharactersGateway.Response> {
-    return { characters }
+    return {
+      characters,
+      pagination: {
+        count: characters.length,
+        next: null,
+        pages: 1,
+        prev: null,
+      },
+    }
   }
 
   async getById({

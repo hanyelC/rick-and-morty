@@ -1,4 +1,4 @@
-import { Character } from '@domain/entities'
+import { ApiPatination, Character } from '@domain/entities'
 
 export interface FetchCharactersGateway {
   fetchAll: (
@@ -7,9 +7,17 @@ export interface FetchCharactersGateway {
 }
 
 export namespace FetchCharactersGateway {
-  export type Request = {}
+  export type Request = {
+    filter?: {
+      name?: string
+      gender?: Character.Gender
+      status?: Character.Status
+    }
+    page?: number
+  }
 
   export type Response = {
     characters: Character[]
+    pagination: ApiPatination
   }
 }

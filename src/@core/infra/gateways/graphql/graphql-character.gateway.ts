@@ -31,8 +31,8 @@ export class GraphqlCharacterGateway
   ): Promise<FetchCharactersGateway.Response> {
     const { data } = await this.apolloClient.query({
       query: gql`
-        query ListCharacters {
-          characters {
+        query ListCharacters($filter: FilterCharacter, $page: Int) {
+          characters(filter: $filter, page: $page) {
             info {
               count
               next
@@ -58,13 +58,25 @@ export class GraphqlCharacterGateway
           }
         }
       `,
+      variables: {
+        filter: params?.filter,
+        page: params?.page ?? 0,
+      },
     })
 
-    const { results } = data.characters
+    const { info, results } = data.characters
 
     const characters = results.map(this.mapCharacterResultToEntity)
 
-    return { characters }
+    return {
+      characters,
+      pagination: {
+        count: info.count,
+        next: info.next,
+        pages: info.pages,
+        prev: info.prev,
+      },
+    }
   }
 
   async getById({

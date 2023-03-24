@@ -1,4 +1,4 @@
-import { Character } from '@domain/entities'
+import { ApiPatination, Character } from '@domain/entities'
 
 export interface FetchCharactersUseCase {
   fetch: (
@@ -7,9 +7,17 @@ export interface FetchCharactersUseCase {
 }
 
 export namespace FetchCharactersUseCase {
-  export type Request = {}
+  export type Request = {
+    filter?: {
+      name?: string
+      gender?: Character.Gender
+      status?: Character.Status
+    }
+    page?: number
+  }
 
   export type Response = {
     characters: Character[]
+    pagination: ApiPatination
   }
 }
