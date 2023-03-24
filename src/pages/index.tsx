@@ -27,6 +27,13 @@ const Home: NextPage<Props> = ({ characters }) => {
     Registry.FetchCharactersUseCase,
   )
 
+  const handleClearFilters = async () => {
+    genderFilter.current = null
+    statusFilter.current = null
+    setName('')
+    setFilteredCharacters(null)
+  }
+
   const handleFetchCharacters = async () => {
     const { characters } = await fetchCharactersUseCase.fetch({
       filter: {
@@ -56,6 +63,9 @@ const Home: NextPage<Props> = ({ characters }) => {
     <div className={`${styles.container} ${inter.className}`}>
       <main>
         <div className={styles['filters-container']}>
+          <div>
+            <button onClick={handleClearFilters}>Clear filters</button>
+          </div>
           <div>
             <input
               type="text"
