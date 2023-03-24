@@ -2,3 +2,15 @@
   display: flex;
   flex-direction: column;
 }
+
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-8);
+  border: 1px solid red;
+  padding: var(--base-size-4);
+}
+
+.filters-container > div {
+  border: 1px solid green;
+}

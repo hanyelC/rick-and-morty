@@ -6,6 +6,7 @@ import { Registry, container } from '@infra/container-registry'
 
 import { GetStaticProps, NextPage } from 'next'
 import { Inter } from 'next/font/google'
+import { useRef, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,18 +15,82 @@ type Props = {
 }
 
 const Home: NextPage<Props> = ({ characters }) => {
+  const [name, setName] = useState('')
+  const [filteredCharacters, setFilteredCharacters] = useState<
+    Character[] | null
+  >(null)
+
+  const genderFilter = useRef<Character.Gender | null>(null)
+  const statusFilter = useRef<Character.Status | null>(null)
+
+  const fetchCharactersUseCase = container.get<FetchCharactersUseCase>(
+    Registry.FetchCharactersUseCase,
+  )
+
+  const handleFetchCharacters = async () => {
+    const { characters } = await fetchCharactersUseCase.fetch({
+      filter: {
+        gender: genderFilter.current ?? undefined,
+        name,
+        status: statusFilter.current ?? undefined,
+      },
+    })
+
+    setFilteredCharacters(characters)
+  }
+
+  const handleSetGender = (gender: Character.Gender) => {
+    genderFilter.current = gender === genderFilter.current ? null : gender
+    handleFetchCharacters()
+  }
+
+  const handleSetStatus = (status: Character.Status) => {
+    statusFilter.current = status === statusFilter.current ? null : status
+    handleFetchCharacters()
+  }
+
+  const charactersToRender =
+    filteredCharacters === null ? characters : filteredCharacters
+
   return (
     <div className={`${styles.container} ${inter.className}`}>
       <main>
-        <h1 className={inter.className}>Lorem ipsum</h1>
-        <div>
-          {characters.map((item) => (
-            <Card
-              key={item.id}
-              {...item}
-              redirectUrl={`/character/${item.id}`}
+        <div className={styles['filters-container']}>
+          <div>
+            <input
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
             />
-          ))}
+            <button onClick={handleFetchCharacters}>Search</button>
+          </div>
+          <div>
+            <button onClick={() => handleSetGender('Male')}>Male</button>
+            <button onClick={() => handleSetGender('Female')}>Female</button>
+            <button onClick={() => handleSetGender('Genderless')}>
+              Genderless
+            </button>
+            <button onClick={() => handleSetGender('unknown')}>unknown</button>
+          </div>
+          <div>
+            <button onClick={() => handleSetStatus('Alive')}>Alive</button>
+            <button onClick={() => handleSetStatus('Dead')}>Dead</button>
+            <button onClick={() => handleSetStatus('unknown')}>unknown</button>
+          </div>
+        </div>
+
+        <div>
+          {charactersToRender.length > 0 ? (
+            charactersToRender.map((item) => (
+              <Card
+                key={item.id}
+                {...item}
+                redirectUrl={`/character/${item.id}`}
+              />
+            ))
+          ) : (
+            <p>Character</p>
+          )}
         </div>
       </main>
     </div>
@@ -37,10 +102,10 @@ export const getStaticProps: GetStaticProps = async () => {
     Registry.FetchCharactersUseCase,
   )
 
-  const { characters } = await useCase.fetch()
+  const { characters, pagination } = await useCase.fetch()
 
   return {
-    props: { characters },
+    props: { characters, pagination },
   }
 }
 
