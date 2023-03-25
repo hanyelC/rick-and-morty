@@ -166,7 +166,6 @@ const Home: NextPage<Props> = ({
             <p>Character</p>
           )}
         </div>
-        <div className={styles.divider} />
         <div className={styles['pagination-container']}>
           <Pagination
             count={paginationInfoToRender.pages}
