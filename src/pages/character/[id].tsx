@@ -4,6 +4,8 @@ import { GetCharacterUseCase } from '@domain/usecases'
 import { Registry, container } from '@infra/container-registry'
 
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
+import React from 'react'
 
 type Props = {
   character: CharacterEntity
@@ -14,21 +16,30 @@ const Character: NextPage<Props> = ({ character }) => {
     <>
       <main className={styles.container}>
         <div>
-          <h1>{character.name}</h1>
-          <ul>
-            <li>origin: {character.origin}</li>
-            <li>status: {character.status}</li>
-            <li>species: {character.species}</li>
-            <li>gender: {character.gender}</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Episodes</h3>
-          <ul>
-            {character.episodes.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          <div className={styles['character-info']}>
+            <Image src={character.image} width={300} height={300} alt="" />
+            <div>
+              <h1>{character.name}</h1>
+              <ul>
+                <li>origin: {character.origin}</li>
+                <li>status: {character.status}</li>
+                <li>species: {character.species}</li>
+                <li>gender: {character.gender}</li>
+              </ul>
+            </div>
+          </div>
+          <div className={styles.divider} />
+          <div className={styles.episodes}>
+            <h3>Episodes</h3>
+            <ul>
+              {character.episodes.map((item) => (
+                <React.Fragment key={item}>
+                  <li> {item}</li>
+                  <div className={styles.divider} />
+                </React.Fragment>
+              ))}
+            </ul>
+          </div>
         </div>
       </main>
     </>
