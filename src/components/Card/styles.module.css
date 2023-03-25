@@ -38,10 +38,6 @@
 }
 
 .card-body p {
-  color: var(--color-fg-default);
-}
-
-.card-body p {
   color: var(--color-fg-muted);
 }
 
