@@ -59,6 +59,13 @@
   --color-border-muted: hsla(210,18%,87%,1);
   --color-border-subtle: rgba(27,31,36,0.15);
 
+  --color-btn-text: #24292f;
+  --color-btn-bg: #f6f8fa;
+  --color-btn-border: rgba(27,31,36,0.15);
+  --color-btn-shadow: 0 1px 0 rgba(27,31,36,0.04);
+  --color-btn-inset-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  --color-btn-hover-bg: #f3f4f6;
+  --color-btn-hover-border: rgba(27,31,36,0.15);
 
   --color-shadow-small: 0 1px 0 rgba(27,31,36,0.04);
   --color-shadow-medium: 0 3px 6px rgba(140,149,159,0.15);
@@ -122,6 +129,10 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul, input, textarea, button {
   padding: 0;
   font-weight: normal;
   font-family: inherit;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 ol, ul {
