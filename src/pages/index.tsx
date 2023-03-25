@@ -47,6 +47,7 @@ const Home: NextPage<Props> = ({
     setName('')
     setCurrentPage(1)
     setFilteredCharacters(null)
+    setPaginationInfo(null)
   }
 
   const fetchCharacters = async (page?: number) => {
