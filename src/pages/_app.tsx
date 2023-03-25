@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import styles from '../styles/pages/app.module.css'
+import { Footer } from '@/components/Footer'
 
 import type { AppProps } from 'next/app'
 import Link from 'next/link'
@@ -13,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
       </header>
       <Component {...pageProps} />
+      <Footer />
     </div>
   )
 }

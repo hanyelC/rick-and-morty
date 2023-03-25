@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  flex:1;
 
   align-items: center;
 
@@ -71,7 +72,7 @@
   }
 
   .episodes > ul {
-    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-24));
+    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-24) - var(--base-size-96));
     overflow: auto;
   }
 }

@@ -4,6 +4,7 @@ import { GetCharacterUseCase } from '@domain/usecases'
 import { Registry, container } from '@infra/container-registry'
 
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import Head from 'next/head'
 import Image from 'next/image'
 import React from 'react'
 
@@ -14,6 +15,9 @@ type Props = {
 const Character: NextPage<Props> = ({ character }) => {
   return (
     <>
+      <Head>
+        <title>{character.name}</title>
+      </Head>
       <main className={styles.container}>
         <div>
           <div className={styles['character-info']}>
