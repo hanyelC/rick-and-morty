@@ -87,36 +87,72 @@ const Home: NextPage<Props> = ({
   const paginationInfoToRender =
     paginationInfo === null ? initialPaginationInfo : paginationInfo
 
+  const genders: Character.Gender[] = [
+    'Female',
+    'Genderless',
+    'Male',
+    'unknown',
+  ]
+
+  const statusList: Character.Status[] = ['Alive', 'Dead', 'unknown']
+
   return (
     <div className={`${styles.container} ${inter.className}`}>
-      <main>
-        <div className={styles['filters-container']}>
-          <div>
-            <button onClick={handleClearFilters}>Clear filters</button>
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
-            <button onClick={handleSearchByName}>Search</button>
-          </div>
-          <div>
-            <button onClick={() => handleSetGender('Male')}>Male</button>
-            <button onClick={() => handleSetGender('Female')}>Female</button>
-            <button onClick={() => handleSetGender('Genderless')}>
-              Genderless
-            </button>
-            <button onClick={() => handleSetGender('unknown')}>unknown</button>
-          </div>
-          <div>
-            <button onClick={() => handleSetStatus('Alive')}>Alive</button>
-            <button onClick={() => handleSetStatus('Dead')}>Dead</button>
-            <button onClick={() => handleSetStatus('unknown')}>unknown</button>
+      <div className={styles['filters-container']}>
+        <div className={styles.search}>
+          <input
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            placeholder="Find a character..."
+          />
+          <button onClick={handleSearchByName}>Search</button>
+        </div>
+        <div>
+          <span>Gender: </span>
+          <div className={styles['button-group']}>
+            {genders.map((gender) => (
+              <button
+                key={gender}
+                className={
+                  genderFilter.current === gender
+                    ? styles['button-selected']
+                    : styles.button
+                }
+                onClick={() => handleSetGender(gender)}
+              >
+                {gender}
+              </button>
+            ))}
           </div>
         </div>
-
+        <div>
+          <span>Status: </span>
+          <div className={styles['button-group']}>
+            {statusList.map((status) => (
+              <button
+                key={status}
+                className={
+                  statusFilter.current === status
+                    ? styles['button-selected']
+                    : styles.button
+                }
+                onClick={() => handleSetStatus(status)}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className={styles['divider-sm']} />
+        <div>
+          <button className={styles.button} onClick={handleClearFilters}>
+            Clear filters
+          </button>
+        </div>
+      </div>
+      <div className={styles.divider} />
+      <main>
         <div className={styles['characters-list']}>
           {charactersToRender.length > 0 ? (
             charactersToRender.map((item) => (
@@ -130,6 +166,7 @@ const Home: NextPage<Props> = ({
             <p>Character</p>
           )}
         </div>
+        <div className={styles.divider} />
         <div className={styles['pagination-container']}>
           <Pagination
             count={paginationInfoToRender.pages}
