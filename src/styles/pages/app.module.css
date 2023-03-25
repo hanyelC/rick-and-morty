@@ -1,5 +1,17 @@
 .container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-canvas-inset);
+}
+
+.header {
+  background-color: var(--color-header-bg);
+  padding: var(--base-size-16) var(--base-size-32);
+  font-weight: var(--base-text-weight-semibold, 600);
+  color: var(--color-header-logo);
+}
+
+.header > div {
   max-width: var(--max-width);
   margin: 0 auto;
-  min-height: 100vh;
 }
