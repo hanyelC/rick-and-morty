@@ -2,12 +2,12 @@ import { Props } from '@/components/Card'
 
 export const mockCardProps = (): Props => {
   return {
-    gender: 'gender',
+    gender: 'fake-gender',
     image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-    name: 'name',
-    origin: 'origin',
-    redirectUrl: 'redirectUrl',
-    species: 'species',
-    status: 'status',
+    name: 'fake-name',
+    origin: 'fake-origin',
+    redirectUrl: 'fake-redirectUrl',
+    species: 'fake-species',
+    status: 'unknown',
   }
 }

@@ -1,4 +1,77 @@
 .container {
   display: flex;
   flex-direction: column;
+
+  align-items: center;
+
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--base-size-16);
+}
+
+.container > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.character-info {
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.character-info > img {
+  border: var(--primer-borderWidth-thin, 1px) solid var(--color-border-default);
+}
+
+.character-info > div {
+  padding: var(--base-size-16);
+}
+
+.character-info, .episodes {
+  display: flex;
+  flex-direction: column;
+}
+
+.character-info, .episodes > ul {
+  background-color: var(--color-canvas-default);
+  border-color: var(--color-border-default);
+  border-radius: var(--borderRadius-medium);
+  border-style: solid;
+  border-width: var(--primer-borderWidth-thin, 1px);
+
+  box-shadow: var(--color-shadow-medium);
+}
+
+.episodes > ul {
+  padding: var(--base-size-16);
+  max-width: fit-content;
+}
+
+.episodes > ul > .divider {
+  margin: var(--base-size-4) 0;
+}
+
+.episodes > ul > .divider:last-child {
+  display: none;
+}
+
+.divider {
+  align-self: stretch;
+  border-right: var(--primer-borderWidth-thin, 1px) solid var(--color-border-default);
+  border-bottom: var(--primer-borderWidth-thin, 1px) solid var(--color-border-default);
+}
+
+@media only screen and (min-width: 768px) {
+  .container > div {
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .episodes > ul {
+    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-24));
+    overflow: auto;
+  }
 }
