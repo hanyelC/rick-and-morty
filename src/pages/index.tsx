@@ -7,6 +7,7 @@ import { Registry, container } from '@infra/container-registry'
 import Pagination from '@mui/material/Pagination'
 import { GetStaticProps, NextPage } from 'next'
 import { Inter } from 'next/font/google'
+import Head from 'next/head'
 import { useRef, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -97,87 +98,92 @@ const Home: NextPage<Props> = ({
   const statusList: Character.Status[] = ['Alive', 'Dead', 'unknown']
 
   return (
-    <div className={`${styles.container} ${inter.className}`}>
-      <div className={styles['filters-container']}>
-        <div className={styles.search}>
-          <input
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            placeholder="Find a character..."
-          />
-          <button onClick={handleSearchByName}>Search</button>
-        </div>
-        <div>
-          <span>Gender: </span>
-          <div className={styles['button-group']}>
-            {genders.map((gender) => (
-              <button
-                key={gender}
-                className={
-                  genderFilter.current === gender
-                    ? styles['button-selected']
-                    : styles.button
-                }
-                onClick={() => handleSetGender(gender)}
-              >
-                {gender}
-              </button>
-            ))}
+    <>
+      <Head>
+        <title>Rick and Morty</title>
+      </Head>
+      <div className={`${styles.container} ${inter.className}`}>
+        <div className={styles['filters-container']}>
+          <div className={styles.search}>
+            <input
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              placeholder="Find a character..."
+            />
+            <button onClick={handleSearchByName}>Search</button>
+          </div>
+          <div>
+            <span>Gender: </span>
+            <div className={styles['button-group']}>
+              {genders.map((gender) => (
+                <button
+                  key={gender}
+                  className={
+                    genderFilter.current === gender
+                      ? styles['button-selected']
+                      : styles.button
+                  }
+                  onClick={() => handleSetGender(gender)}
+                >
+                  {gender}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <span>Status: </span>
+            <div className={styles['button-group']}>
+              {statusList.map((status) => (
+                <button
+                  key={status}
+                  className={
+                    statusFilter.current === status
+                      ? styles['button-selected']
+                      : styles.button
+                  }
+                  onClick={() => handleSetStatus(status)}
+                >
+                  {status}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className={styles['divider-sm']} />
+          <div>
+            <button className={styles.button} onClick={handleClearFilters}>
+              Clear filters
+            </button>
           </div>
         </div>
-        <div>
-          <span>Status: </span>
-          <div className={styles['button-group']}>
-            {statusList.map((status) => (
-              <button
-                key={status}
-                className={
-                  statusFilter.current === status
-                    ? styles['button-selected']
-                    : styles.button
-                }
-                onClick={() => handleSetStatus(status)}
-              >
-                {status}
-              </button>
-            ))}
+        <div className={styles.divider} />
+        <main>
+          <div className={styles['characters-list']}>
+            {charactersToRender.length > 0 ? (
+              charactersToRender.map((item) => (
+                <Card
+                  key={item.id}
+                  {...item}
+                  redirectUrl={`/character/${item.id}`}
+                />
+              ))
+            ) : (
+              <p>We couldn{"'"}t find any character matching the filters</p>
+            )}
           </div>
-        </div>
-        <div className={styles['divider-sm']} />
-        <div>
-          <button className={styles.button} onClick={handleClearFilters}>
-            Clear filters
-          </button>
-        </div>
+          <div className={styles['pagination-container']}>
+            <Pagination
+              count={paginationInfoToRender.pages}
+              onChange={handleChangePage}
+              variant="outlined"
+              hideNextButton={paginationInfoToRender?.next === null}
+              hidePrevButton={paginationInfoToRender?.prev === null}
+              page={currentPage}
+            />
+          </div>
+        </main>
       </div>
-      <div className={styles.divider} />
-      <main>
-        <div className={styles['characters-list']}>
-          {charactersToRender.length > 0 ? (
-            charactersToRender.map((item) => (
-              <Card
-                key={item.id}
-                {...item}
-                redirectUrl={`/character/${item.id}`}
-              />
-            ))
-          ) : (
-            <p>Character</p>
-          )}
-        </div>
-        <div className={styles['pagination-container']}>
-          <Pagination
-            count={paginationInfoToRender.pages}
-            onChange={handleChangePage}
-            variant="outlined"
-            hideNextButton={paginationInfoToRender?.next === null}
-            hidePrevButton={paginationInfoToRender?.prev === null}
-            page={currentPage}
-          />
-        </div>
-      </main>
-    </div>
+    </>
   )
 }
 
