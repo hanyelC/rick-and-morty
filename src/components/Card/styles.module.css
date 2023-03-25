@@ -1,12 +1,79 @@
 .container {
   display: flex;
+
+  width: 100%;
+  max-height: 200px;
+  max-width: 550px;
+
+  overflow: hidden;
+
+  background-color: var(--color-canvas-default);
+  border-color: var(--color-border-default);
+  border-radius: var(--borderRadius-medium);
+  border-style: solid;
+  border-width: var(--primer-borderWidth-thin, 1px);
+
+  box-shadow: var(--color-shadow-medium);
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
+  gap: var(--base-size-12);
+
+  width: 100%;
+
+  padding: var(--base-size-16);
 }
 
-.more-details {
-  background-color: blue;
+.more-details:hover {
+  color: var(--color-accent-fg);
+}
+
+.container figure {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 200px;
+}
+
+.card-body p {
+  color: var(--color-fg-default);
+}
+
+.card-body p {
+  color: var(--color-fg-muted);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-4);
+}
+
+.status-icon {
+  height: var(--base-size-8);
+  width: var(--base-size-8);
+
+  display: inline-block;
+
+  border-radius: var(--borderRadius-full);
+}
+
+.status-icon-success {
+  composes: status-icon;
+
+  background-color: var(--color-success-emphasis);
+}
+
+.status-icon-danger {
+  composes: status-icon;
+
+  background-color: var(--color-danger-emphasis);
+}
+
+.status-icon-neutral {
+  composes: status-icon;
+
+  background-color: var(--color-neutral-emphasis);
 }
