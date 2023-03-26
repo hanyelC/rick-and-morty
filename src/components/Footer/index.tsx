@@ -10,7 +10,10 @@ export const Footer: React.FC = () => {
       <div>
         <span>
           {'\u276e'}
-          {'\u276f'} by <a href="https://github.com/hanyelc">Hanyel</a>
+          {'\u276f'} by{' '}
+          <a href="https://github.com/hanyelc" target="_blank" rel="noreferrer">
+            Hanyel
+          </a>
         </span>
 
         <span> {new Date().getFullYear()}</span>
