@@ -84,8 +84,8 @@
     justify-content: center;
   }
 
-  .episodes > ul {
-    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-24) - var(--base-size-96));
+  .episodes > ul {            /* Header height         main padding          .episodes spacing     Footer height    */
+    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-40) - var(--base-size-96));
     overflow: auto;
   }
 }
