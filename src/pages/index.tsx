@@ -6,11 +6,8 @@ import { Registry, container } from '@infra/container-registry'
 
 import Pagination from '@mui/material/Pagination'
 import { GetStaticProps, NextPage } from 'next'
-import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import { useRef, useState } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
 
 type Props = {
   characters: Character[]
@@ -102,7 +99,7 @@ const Home: NextPage<Props> = ({
       <Head>
         <title>Rick and Morty</title>
       </Head>
-      <div className={`${styles.container} ${inter.className}`}>
+      <div className={styles.container}>
         <div className={styles['filters-container']}>
           <div className={styles.search}>
             <input
