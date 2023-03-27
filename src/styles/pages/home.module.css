@@ -88,7 +88,6 @@
 }
 
 .search > input:focus {
-
   background-color: var(--color-canvas-default);
 }
 
