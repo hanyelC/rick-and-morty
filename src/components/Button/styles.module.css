@@ -1,0 +1,30 @@
+.container {
+  border: 1px solid var(--color-btn-border);
+  color: var(--color-btn-text);
+  background-color: var(--color-btn-bg);
+  box-shadow: var(--color-btn-shadow), var(--color-btn-inset-shadow);
+  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: color,background-color,box-shadow,border-color;
+
+  padding: var(--base-size-4) var(--base-size-12);
+  font-size: var(--base-size-12);
+  line-height: var(--base-size-20);
+
+  border-radius: var(--borderRadius-medium);
+}
+
+.container:hover {
+  background-color: var(--color-btn-hover-bg);
+  border-color: var(--color-btn-hover-border);
+  transition-duration: .1s;
+}
+
+.container:focus-visible {
+  outline-color: var(--color-accent-fg);
+}
+
+.button-accent {
+  composes: container;
+
+  background-color: var(--color-accent-subtle);
+}

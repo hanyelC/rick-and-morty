@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button'
 import styles from '../styles/pages/home.module.css'
 import { Card } from '@/components/Card'
 import { ApiPatination, Character } from '@domain/entities'
@@ -108,23 +109,23 @@ const Home: NextPage<Props> = ({
               value={name}
               placeholder="Find a character..."
             />
-            <button onClick={handleSearchByName}>Search</button>
+            <Button variant="accent" onClick={handleSearchByName}>
+              Search
+            </Button>
           </div>
           <div>
             <span>Gender: </span>
             <div className={styles['button-group']}>
               {genders.map((gender) => (
-                <button
+                <Button
                   key={gender}
-                  className={
-                    genderFilter.current === gender
-                      ? styles['button-selected']
-                      : styles.button
+                  variant={
+                    genderFilter.current === gender ? 'accent' : 'standard'
                   }
                   onClick={() => handleSetGender(gender)}
                 >
                   {gender}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -132,25 +133,21 @@ const Home: NextPage<Props> = ({
             <span>Status: </span>
             <div className={styles['button-group']}>
               {statusList.map((status) => (
-                <button
+                <Button
                   key={status}
-                  className={
-                    statusFilter.current === status
-                      ? styles['button-selected']
-                      : styles.button
+                  variant={
+                    statusFilter.current === status ? 'accent' : 'standard'
                   }
                   onClick={() => handleSetStatus(status)}
                 >
                   {status}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
           <div className={styles['divider-sm']} />
           <div>
-            <button className={styles.button} onClick={handleClearFilters}>
-              Clear filters
-            </button>
+            <Button onClick={handleClearFilters}>Clear filters</Button>
           </div>
         </div>
         <div className={styles.divider} />
