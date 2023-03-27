@@ -41,7 +41,7 @@ const Home: NextPage<Props> = ({
 
   const handleChangePage = (_: unknown, page: number) => {
     setCurrentPage(page)
-    fetchCharacters(page)
+    fetchCharacters(page, { gender: genderFilter, status: statusFilter })
   }
 
   const handleClearFilters = async () => {
@@ -175,16 +175,18 @@ const Home: NextPage<Props> = ({
               <p>We couldn{"'"}t find any character matching the filters</p>
             )}
           </div>
-          <div className={styles['pagination-container']}>
-            <Pagination
-              count={paginationInfoToRender.pages}
-              onChange={handleChangePage}
-              variant="outlined"
-              hideNextButton={paginationInfoToRender?.next === null}
-              hidePrevButton={paginationInfoToRender?.prev === null}
-              page={currentPage}
-            />
-          </div>
+          {paginationInfoToRender.pages > 1 && (
+            <div className={styles['pagination-container']}>
+              <Pagination
+                count={paginationInfoToRender.pages}
+                onChange={handleChangePage}
+                variant="outlined"
+                hideNextButton={paginationInfoToRender?.next === null}
+                hidePrevButton={paginationInfoToRender?.prev === null}
+                page={currentPage}
+              />
+            </div>
+          )}
         </main>
       </div>
     </>
