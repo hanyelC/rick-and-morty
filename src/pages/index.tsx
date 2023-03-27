@@ -8,7 +8,7 @@ import { Registry, container } from '@infra/container-registry'
 import Pagination from '@mui/material/Pagination'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { ButtonGroup } from '@/components/ButtonGroup'
 
 type Props = {
@@ -27,9 +27,12 @@ const Home: NextPage<Props> = ({
   const [paginationInfo, setPaginationInfo] = useState<ApiPatination | null>(
     null,
   )
-
-  const genderFilter = useRef<Character.Gender | null>(null)
-  const statusFilter = useRef<Character.Status | null>(null)
+  const [genderFilter, setGenderFilter] = useState<Character.Gender | null>(
+    null,
+  )
+  const [statusFilter, setStatusFilter] = useState<Character.Status | null>(
+    null,
+  )
   const [currentPage, setCurrentPage] = useState<number>(1)
 
   const fetchCharactersUseCase = container.get<FetchCharactersUseCase>(
@@ -42,21 +45,27 @@ const Home: NextPage<Props> = ({
   }
 
   const handleClearFilters = async () => {
-    genderFilter.current = null
-    statusFilter.current = null
+    setGenderFilter(null)
+    setStatusFilter(null)
     setName('')
     setCurrentPage(1)
     setFilteredCharacters(null)
     setPaginationInfo(null)
   }
 
-  const fetchCharacters = async (page?: number) => {
+  const fetchCharacters = async (
+    page?: number,
+    filter?: {
+      gender: Character.Gender | null
+      status: Character.Status | null
+    },
+  ) => {
     const { characters, pagination } = await fetchCharactersUseCase.fetch({
       page,
       filter: {
-        gender: genderFilter.current ?? undefined,
+        gender: filter?.gender ?? undefined,
         name,
-        status: statusFilter.current ?? undefined,
+        status: filter?.status ?? undefined,
       },
     })
 
@@ -70,14 +79,18 @@ const Home: NextPage<Props> = ({
   }
 
   const handleSetGender = (gender: Character.Gender) => {
-    genderFilter.current = gender === genderFilter.current ? null : gender
-    fetchCharacters()
+    const updatedValue = gender === genderFilter ? null : gender
+
+    fetchCharacters(1, { gender: updatedValue, status: statusFilter })
+    setGenderFilter(updatedValue)
     setCurrentPage(1)
   }
 
   const handleSetStatus = (status: Character.Status) => {
-    statusFilter.current = status === statusFilter.current ? null : status
-    fetchCharacters()
+    const updatedValue = status === statusFilter ? null : status
+
+    fetchCharacters(1, { status: updatedValue, gender: genderFilter })
+    setStatusFilter(updatedValue)
     setCurrentPage(1)
   }
 
@@ -120,9 +133,7 @@ const Home: NextPage<Props> = ({
               {genders.map((gender) => (
                 <Button
                   key={gender}
-                  variant={
-                    genderFilter.current === gender ? 'accent' : 'standard'
-                  }
+                  variant={genderFilter === gender ? 'accent' : 'standard'}
                   onClick={() => handleSetGender(gender)}
                 >
                   {gender}
@@ -136,9 +147,7 @@ const Home: NextPage<Props> = ({
               {statusList.map((status) => (
                 <Button
                   key={status}
-                  variant={
-                    statusFilter.current === status ? 'accent' : 'standard'
-                  }
+                  variant={statusFilter === status ? 'accent' : 'standard'}
                   onClick={() => handleSetStatus(status)}
                 >
                   {status}
