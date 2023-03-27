@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useRef, useState } from 'react'
+import { ButtonGroup } from '@/components/ButtonGroup'
 
 type Props = {
   characters: Character[]
@@ -115,7 +116,7 @@ const Home: NextPage<Props> = ({
           </div>
           <div>
             <span>Gender: </span>
-            <div className={styles['button-group']}>
+            <ButtonGroup>
               {genders.map((gender) => (
                 <Button
                   key={gender}
@@ -127,11 +128,11 @@ const Home: NextPage<Props> = ({
                   {gender}
                 </Button>
               ))}
-            </div>
+            </ButtonGroup>
           </div>
           <div>
             <span>Status: </span>
-            <div className={styles['button-group']}>
+            <ButtonGroup>
               {statusList.map((status) => (
                 <Button
                   key={status}
@@ -143,7 +144,7 @@ const Home: NextPage<Props> = ({
                   {status}
                 </Button>
               ))}
-            </div>
+            </ButtonGroup>
           </div>
           <div className={styles['divider-sm']} />
           <div>
