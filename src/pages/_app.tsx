@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import styles from '../styles/pages/app.module.css'
 import { Footer } from '@/components/Footer'
+import { GoToTopButton } from '@/components/GoToTopButton'
 import { Header } from '@/components/Header'
 
 import type { AppProps } from 'next/app'
@@ -14,6 +15,16 @@ export default function App({ Component, pageProps }: AppProps) {
       <Header />
       <Component {...pageProps} />
       <Footer />
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          right: 0,
+          padding: 'var(--base-size-16)',
+        }}
+      >
+        <GoToTopButton />
+      </div>
     </div>
   )
 }

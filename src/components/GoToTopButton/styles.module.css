@@ -1,0 +1,14 @@
+.container {
+  height: var(--base-size-40);
+  width: var(--base-size-40);
+
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--borderRadius-medium);
+  box-shadow: var(--color-btn-shadow);
+}
+
+.container:hover {
+  background-color: var(--color-btn-hover-bg);
+  border-color: var(--color-btn-hover-border);
+}
