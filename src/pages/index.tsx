@@ -1,4 +1,6 @@
 import styles from '../styles/pages/home.module.css'
+import { Button } from '@/components/Button'
+import { ButtonGroup } from '@/components/ButtonGroup'
 import { Card } from '@/components/Card'
 import { ApiPatination, Character } from '@domain/entities'
 import { FetchCharactersUseCase } from '@domain/usecases'
@@ -6,11 +8,8 @@ import { Registry, container } from '@infra/container-registry'
 
 import Pagination from '@mui/material/Pagination'
 import { GetStaticProps, NextPage } from 'next'
-import { Inter } from 'next/font/google'
 import Head from 'next/head'
-import { useRef, useState } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useState } from 'react'
 
 type Props = {
   characters: Character[]
@@ -28,9 +27,12 @@ const Home: NextPage<Props> = ({
   const [paginationInfo, setPaginationInfo] = useState<ApiPatination | null>(
     null,
   )
-
-  const genderFilter = useRef<Character.Gender | null>(null)
-  const statusFilter = useRef<Character.Status | null>(null)
+  const [genderFilter, setGenderFilter] = useState<Character.Gender | null>(
+    null,
+  )
+  const [statusFilter, setStatusFilter] = useState<Character.Status | null>(
+    null,
+  )
   const [currentPage, setCurrentPage] = useState<number>(1)
 
   const fetchCharactersUseCase = container.get<FetchCharactersUseCase>(
@@ -39,25 +41,31 @@ const Home: NextPage<Props> = ({
 
   const handleChangePage = (_: unknown, page: number) => {
     setCurrentPage(page)
-    fetchCharacters(page)
+    fetchCharacters(page, { gender: genderFilter, status: statusFilter })
   }
 
   const handleClearFilters = async () => {
-    genderFilter.current = null
-    statusFilter.current = null
+    setGenderFilter(null)
+    setStatusFilter(null)
     setName('')
     setCurrentPage(1)
     setFilteredCharacters(null)
     setPaginationInfo(null)
   }
 
-  const fetchCharacters = async (page?: number) => {
+  const fetchCharacters = async (
+    page?: number,
+    filter?: {
+      gender: Character.Gender | null
+      status: Character.Status | null
+    },
+  ) => {
     const { characters, pagination } = await fetchCharactersUseCase.fetch({
       page,
       filter: {
-        gender: genderFilter.current ?? undefined,
+        gender: filter?.gender ?? undefined,
         name,
-        status: statusFilter.current ?? undefined,
+        status: filter?.status ?? undefined,
       },
     })
 
@@ -71,14 +79,18 @@ const Home: NextPage<Props> = ({
   }
 
   const handleSetGender = (gender: Character.Gender) => {
-    genderFilter.current = gender === genderFilter.current ? null : gender
-    fetchCharacters()
+    const updatedValue = gender === genderFilter ? null : gender
+
+    fetchCharacters(1, { gender: updatedValue, status: statusFilter })
+    setGenderFilter(updatedValue)
     setCurrentPage(1)
   }
 
   const handleSetStatus = (status: Character.Status) => {
-    statusFilter.current = status === statusFilter.current ? null : status
-    fetchCharacters()
+    const updatedValue = status === statusFilter ? null : status
+
+    fetchCharacters(1, { status: updatedValue, gender: genderFilter })
+    setStatusFilter(updatedValue)
     setCurrentPage(1)
   }
 
@@ -102,7 +114,7 @@ const Home: NextPage<Props> = ({
       <Head>
         <title>Rick and Morty</title>
       </Head>
-      <div className={`${styles.container} ${inter.className}`}>
+      <div className={styles.container}>
         <div className={styles['filters-container']}>
           <div className={styles.search}>
             <input
@@ -111,49 +123,41 @@ const Home: NextPage<Props> = ({
               value={name}
               placeholder="Find a character..."
             />
-            <button onClick={handleSearchByName}>Search</button>
+            <Button variant="accent" onClick={handleSearchByName}>
+              Search
+            </Button>
           </div>
           <div>
             <span>Gender: </span>
-            <div className={styles['button-group']}>
+            <ButtonGroup>
               {genders.map((gender) => (
-                <button
+                <Button
                   key={gender}
-                  className={
-                    genderFilter.current === gender
-                      ? styles['button-selected']
-                      : styles.button
-                  }
+                  variant={genderFilter === gender ? 'accent' : 'standard'}
                   onClick={() => handleSetGender(gender)}
                 >
                   {gender}
-                </button>
+                </Button>
               ))}
-            </div>
+            </ButtonGroup>
           </div>
           <div>
             <span>Status: </span>
-            <div className={styles['button-group']}>
+            <ButtonGroup>
               {statusList.map((status) => (
-                <button
+                <Button
                   key={status}
-                  className={
-                    statusFilter.current === status
-                      ? styles['button-selected']
-                      : styles.button
-                  }
+                  variant={statusFilter === status ? 'accent' : 'standard'}
                   onClick={() => handleSetStatus(status)}
                 >
                   {status}
-                </button>
+                </Button>
               ))}
-            </div>
+            </ButtonGroup>
           </div>
           <div className={styles['divider-sm']} />
           <div>
-            <button className={styles.button} onClick={handleClearFilters}>
-              Clear filters
-            </button>
+            <Button onClick={handleClearFilters}>Clear filters</Button>
           </div>
         </div>
         <div className={styles.divider} />
@@ -171,16 +175,18 @@ const Home: NextPage<Props> = ({
               <p>We couldn{"'"}t find any character matching the filters</p>
             )}
           </div>
-          <div className={styles['pagination-container']}>
-            <Pagination
-              count={paginationInfoToRender.pages}
-              onChange={handleChangePage}
-              variant="outlined"
-              hideNextButton={paginationInfoToRender?.next === null}
-              hidePrevButton={paginationInfoToRender?.prev === null}
-              page={currentPage}
-            />
-          </div>
+          {paginationInfoToRender.pages > 1 && (
+            <div className={styles['pagination-container']}>
+              <Pagination
+                count={paginationInfoToRender.pages}
+                onChange={handleChangePage}
+                variant="outlined"
+                hideNextButton={paginationInfoToRender?.next === null}
+                hidePrevButton={paginationInfoToRender?.prev === null}
+                page={currentPage}
+              />
+            </div>
+          )}
         </main>
       </div>
     </>

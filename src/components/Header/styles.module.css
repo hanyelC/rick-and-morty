@@ -1,0 +1,16 @@
+.header {
+  font-size: x-large;
+  background-color: var(--color-header-bg);
+  padding: var(--base-size-16) var(--base-size-32);
+  font-weight: var(--base-text-weight-semibold, 600);
+  color: var(--color-header-logo);
+}
+
+.header > div {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.header > div > a:hover {
+  color: var(--color-header-text);
+}
