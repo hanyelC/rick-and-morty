@@ -1,5 +1,6 @@
-import { Button } from '@/components/Button'
 import styles from '../styles/pages/home.module.css'
+import { Button } from '@/components/Button'
+import { ButtonGroup } from '@/components/ButtonGroup'
 import { Card } from '@/components/Card'
 import { ApiPatination, Character } from '@domain/entities'
 import { FetchCharactersUseCase } from '@domain/usecases'
@@ -9,7 +10,6 @@ import Pagination from '@mui/material/Pagination'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
-import { ButtonGroup } from '@/components/ButtonGroup'
 
 type Props = {
   characters: Character[]
