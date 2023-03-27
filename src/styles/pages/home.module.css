@@ -62,10 +62,9 @@
 .search > button {
   outline: 0;
   border: 1px solid transparent;
-  background-color: var(--color-accent-subtle);
   font-weight: 600;
-  color: var(--color-fg-default);
-  padding: var(--base-size-4) var(--base-size-12);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .search > button:hover {
