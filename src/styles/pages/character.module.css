@@ -29,6 +29,15 @@
   padding: var(--base-size-16);
 }
 
+.character-info > div > ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-4);
+
+  margin-top: var(--base-size-8);
+  color: var(--color-fg-default);
+}
+
 .character-info, .episodes {
   display: flex;
   flex-direction: column;
@@ -42,6 +51,10 @@
   border-width: var(--primer-borderWidth-thin, 1px);
 
   box-shadow: var(--color-shadow-medium);
+}
+
+.episodes > h3 {
+  margin-bottom: var(--base-size-16);
 }
 
 .episodes > ul {
@@ -71,8 +84,8 @@
     justify-content: center;
   }
 
-  .episodes > ul {
-    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-24) - var(--base-size-96));
+  .episodes > ul {            /* Header height         main padding          .episodes spacing     Footer height    */
+    max-height: calc(100vh - var(--base-size-64) - var(--base-size-32) - var(--base-size-40) - var(--base-size-96));
     overflow: auto;
   }
 }
