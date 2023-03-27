@@ -28,3 +28,7 @@
 
   background-color: var(--color-accent-subtle);
 }
+
+.button-accent:hover {
+  background-color: var(--color-accent-muted);
+}
